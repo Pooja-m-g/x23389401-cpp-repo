@@ -1,0 +1,257 @@
+{% extends 'ecom/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+.orders-wrapper {
+  padding: 40px 40px 60px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.orders-header {
+  margin-bottom: 40px;
+}
+
+.orders-header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #2d3436;
+}
+
+.orders-header p {
+  color: #636e72;
+  font-size: 1rem;
+}
+
+.orders-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th {
+  padding: 18px 20px;
+  text-align: left;
+  font-weight: 600;
+  color: #636e72;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #fafafa;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.orders-table td {
+  padding: 18px 20px;
+  border-bottom: 1px solid #f5f5f5;
+  vertical-align: middle;
+  color: #2d3436;
+}
+
+.orders-table tr:hover {
+  background: #fafafa;
+}
+
+.customer-name {
+  font-weight: 600;
+  color: #2d3436;
+}
+
+.customer-mobile {
+  color: #636e72;
+}
+
+.shipment-address {
+  color: #636e72;
+  max-width: 200px;
+}
+
+.product-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.product-name {
+  font-weight: 600;
+  color: #2d3436;
+}
+
+.status-badge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-pending {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.status-confirmed {
+  background: #e3f2fd;
+  color: #0d47a1;
+}
+
+.status-delivery {
+  background: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.status-delivered {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.action-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 3px;
+}
+
+.update-btn {
+  background: #e3f2fd;
+  color: #0d47a1;
+}
+
+.update-btn:hover {
+  background: #bbdefb;
+  color: #0d47a1;
+  text-decoration: none;
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.delete-btn:hover {
+  background: #fecaca;
+  color: #dc2626;
+  text-decoration: none;
+}
+
+.no-orders {
+  text-align: center;
+  padding: 60px 20px;
+  color: #636e72;
+}
+
+.no-orders i {
+  font-size: 3rem;
+  color: #ddd;
+  margin-bottom: 15px;
+}
+
+.no-orders h3 {
+  color: #2d3436;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .orders-wrapper {
+    padding: 20px 20px 40px;
+  }
+  
+  .orders-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .product-image {
+    width: 50px;
+    height: 50px;
+  }
+}
+</style>
+
+<div class="orders-wrapper">
+  <div class="orders-header">
+    <h1><i class="fas fa-shopping-bag" style="color: #FF6B35;"></i> Order Management</h1>
+    <p>Manage and track all customer orders</p>
+  </div>
+
+  <div class="orders-card">
+    {% if data %}
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>Customer</th>
+          <th>Mobile</th>
+          <th>Address</th>
+          <th>Product</th>
+          <th>Image</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product,customer,order in data %}
+        <tr>
+          {% for c in customer %}
+          <td><span class="customer-name">{{ c.get_name }}</span></td>
+          <td><span class="customer-mobile">{{ c.mobile }}</span></td>
+          <td><span class="shipment-address">{{ order.address }}</span></td>
+          {% endfor %}
+          
+          {% for p in product %}
+          <td><span class="product-name">{{ p.name }}</span></td>
+          <td>
+            <img src="{{ p.product_image.url }}" alt="Product" class="product-image" />
+          </td>
+          <td>
+            {% if order.status == 'Pending' %}
+              <span class="status-badge status-pending">{{ order.status }}</span>
+            {% elif order.status == 'Order Confirmed' %}
+              <span class="status-badge status-confirmed">{{ order.status }}</span>
+            {% elif order.status == 'Out for Delivery' %}
+              <span class="status-badge status-delivery">{{ order.status }}</span>
+            {% elif order.status == 'Delivered' %}
+              <span class="status-badge status-delivered">{{ order.status }}</span>
+            {% else %}
+              <span class="status-badge status-pending">{{ order.status }}</span>
+            {% endif %}
+          </td>
+          <td>
+            <a class="action-btn update-btn" href="{% url 'update-order' order.id %}">
+              <i class="fas fa-edit"></i> Update
+            </a>
+            <a class="action-btn delete-btn" href="{% url 'delete-order' order.id %}">
+              <i class="fas fa-trash"></i> Delete
+            </a>
+          </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="no-orders">
+      <i class="fas fa-inbox"></i>
+      <h3>No Orders Yet</h3>
+      <p>Customer orders will appear here once they start ordering.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock content %}

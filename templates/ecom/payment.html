@@ -1,0 +1,255 @@
+{% extends 'ecom/customer_base.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<style media="screen">
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FDC830 100%);
+  padding-top: 100px;
+}
+
+.payment-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.demo-notice {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #2d3748;
+  padding: 15px 25px;
+  border-radius: 15px;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(255,215,0,0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.demo-notice i {
+  margin-right: 10px;
+}
+
+.payment-card {
+  background: white;
+  border-radius: 30px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  overflow: hidden;
+}
+
+.payment-header {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FDC830 100%);
+  color: white;
+  padding: 30px;
+  text-align: center;
+}
+
+.payment-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.payment-header i {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.payment-form {
+  padding: 40px 35px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 15px 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102,126,234,0.1);
+}
+
+.card-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: #cbd5e0;
+}
+
+.expiry-cvv-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 15px;
+}
+
+.expiry-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.total-section {
+  background: #f7fafc;
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.total-label {
+  font-size: 1.1rem;
+  color: #718096;
+  margin-bottom: 10px;
+}
+
+.total-amount {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.pay-btn {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  border: none;
+  border-radius: 15px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(72,187,120,0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+.pay-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(72,187,120,0.6);
+  color: white;
+  text-decoration: none;
+}
+
+.pay-btn i {
+  margin-right: 10px;
+}
+
+.security-note {
+  text-align: center;
+  color: #718096;
+  font-size: 0.9rem;
+  margin-top: 20px;
+}
+
+.security-note i {
+  color: #48bb78;
+  margin-right: 5px;
+}
+
+@media (max-width: 600px) {
+  .expiry-cvv-row {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<div class="payment-container">
+  <div class="demo-notice">
+    <i class="fas fa-exclamation-triangle"></i>
+    DEMO MODE - This is a test payment page. No real charges will be made.
+  </div>
+
+  <div class="payment-card">
+    <div class="payment-header">
+      <i class="fas fa-credit-card"></i>
+      <h2>Payment Details</h2>
+      <p>Complete your order securely</p>
+    </div>
+
+    <form class="payment-form" role="form" method="post">
+      <div class="form-group">
+        <label class="form-label">
+          <i class="fas fa-credit-card"></i> Card Number
+        </label>
+        <input type="text" class="form-control" placeholder="1234 5678 9012 3456" required autofocus />
+        <i class="fas fa-credit-card card-icon"></i>
+      </div>
+
+      <div class="expiry-cvv-row">
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-calendar"></i> Expiry Date
+          </label>
+          <div class="expiry-group">
+            <input type="text" class="form-control" placeholder="MM" maxlength="2" required />
+            <input type="text" class="form-control" placeholder="YY" maxlength="2" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="fas fa-lock"></i> CVV
+          </label>
+          <input type="password" class="form-control" placeholder="123" maxlength="3" required />
+        </div>
+      </div>
+
+      <div class="total-section">
+        <div class="total-label">Total Amount</div>
+        <div class="total-amount">${{total}}</div>
+      </div>
+
+      <a href="/payment-success" class="pay-btn">
+        <i class="fas fa-lock"></i> Pay Now
+      </a>
+
+      <div class="security-note">
+        <i class="fas fa-shield-alt"></i>
+        Your payment information is secure and encrypted
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

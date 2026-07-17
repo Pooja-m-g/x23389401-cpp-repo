@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+#navbar {
+  background: white !important;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  padding: 12px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.navbar-brand {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #2d3436 !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-brand i {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.navbar-brand span {
+  color: #FF6B35;
+}
+
+.navbar-search {
+  padding: 0;
+}
+
+.search-container {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+  background: #f8f9fa;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.search-container:focus-within {
+  border-color: #FF6B35;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(255,107,53,0.08);
+}
+
+.navbar-input {
+  flex: 1;
+  border: none;
+  padding: 12px 18px;
+  font-size: 0.95rem;
+  outline: none;
+  background: transparent;
+}
+
+.navbar-button {
+  background: transparent;
+  border: none;
+  padding: 12px 18px;
+  color: #636e72;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navbar-button:hover {
+  color: #FF6B35;
+}
+
+.cart-button {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cart-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255,107,53,0.3);
+  color: white;
+  text-decoration: none;
+}
+
+.cart-icon {
+  font-size: 1rem;
+}
+
+.item-number {
+  background: white;
+  color: #FF6B35;
+  border-radius: 50%;
+  height: 22px;
+  width: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.upper-links {
+  display: inline-block;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #636e72;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.upper-links:hover {
+  background: #f8f9fa;
+  color: #FF6B35;
+  text-decoration: none;
+}
+
+.upper-links i {
+  color: #FF6B35;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  display: none;
+  background: white;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  margin-top: 8px;
+  padding: 8px 0;
+  min-width: 180px;
+}
+
+.profile-links {
+  font-size: 0.95rem;
+  border-bottom: 1px solid #f5f5f5;
+  display: block;
+  padding: 12px 20px;
+  color: #2d3436;
+  transition: all 0.2s ease;
+}
+
+.profile-links:hover {
+  background: #f8f9fa;
+  color: #FF6B35;
+  text-decoration: none;
+}
+
+.profile-links:last-child {
+  border-bottom: none;
+}
+
+.row1 {
+  padding: 5px 50px 5px 50px;
+}
+
+.row2 {
+  padding: 0 20px 5px 20px;
+}
+
+@media screen and (max-width: 768px) {
+  .largenav {
+    display: none !important;
+  }
+  
+  .smallnav {
+    display: block;
+  }
+  
+  .row1, .row2 {
+    padding: 10px 15px;
+  }
+  
+  .navbar-brand {
+    font-size: 1.3rem;
+  }
+  
+  .cart-button span:not(.item-number) {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .largenav {
+    display: block !important;
+  }
+  
+  .smallnav {
+    display: none;
+  }
+}
+</style>
+</head>
+<body>
+<div id="navbar">
+  <div class="container">
+    <div class="row row1">
+      <ul class="largenav pull-right" style="list-style: none; margin: 0; padding: 0;">
+        <li class="upper-links dropdown">
+          <a class="links upper-links" style="font-size:15px" href="#">
+            <i class="fas fa-user-circle" ></i> Login & SignUp
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="profile-links" style="font-size:15px" href="/customerlogin"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            <li><a class="profile-links" style="font-size:15px" href="/customersignup"><i class="fas fa-user-plus"></i> Signup</a></li>
+          </ul>
+        </li>
+        <li class="upper-links"><a class="links upper-links" style="font-size:15px" href="/adminclick"><i class="fas fa-user-shield"></i> Admin</a></li>
+        <li class="upper-links dropdown">
+          <a class="links upper-links" style="font-size:15px" href="#"><i class="fas fa-ellipsis-h"></i> More</a>
+          <ul class="dropdown-menu">
+            <li><a class="profile-links" style="font-size:15px" href="/send-feedback"><i class="fas fa-comment-dots"></i> Send Feedback</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="row row2">
+      <div class="col-sm-2">
+        <a href="/" class="navbar-brand">
+          <i class="fas fa-store"></i>
+          <span>Food<span>House</span></span>
+        </a>
+      </div>
+
+      <div class="navbar-search col-sm-8 col-xs-11">
+        <form action="/search" method="get">
+          <div class="search-container">
+            <input class="navbar-input" type="search" placeholder="Search for food..." name="query" id="query">
+            <button class="navbar-button" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="cart1 largenav col-sm-2" style="text-align: right;">
+        <a class="cart-button" href="/cart">
+          <i class="fas fa-shopping-cart cart-icon"></i>
+          <span>Cart</span>
+          <span class="item-number">{{ product_count_in_cart }}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

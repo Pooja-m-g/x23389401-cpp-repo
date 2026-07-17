@@ -1,0 +1,9 @@
+django
+django-widget-tweaks==1.4.8
+sqlparse==0.3.1
+xhtml2pdf
+requests
+boto3
+psycopg2-binary
+payment-date-time
+invoice-pdf-lib==3.0.0

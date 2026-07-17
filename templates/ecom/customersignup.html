@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FoodHouse - Sign Up</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.signup-container {
+  max-width: 520px;
+  width: 100%;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+  overflow: hidden;
+  margin-top: 100px;
+  margin-bottom: 50px;
+}
+
+.signup-header {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  padding: 35px 30px;
+  text-align: center;
+}
+
+.signup-header .icon {
+  font-size: 2.8rem;
+  margin-bottom: 10px;
+}
+
+.signup-header h1 {
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.signup-header p {
+  color: rgba(255,255,255,0.9);
+  font-size: 0.95rem;
+}
+
+.signup-form {
+  padding: 30px 30px 20px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.form-group i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #FF6B35;
+}
+
+.form-control {
+  width: 100%;
+  padding: 13px 16px 13px 46px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  outline: none;
+  background: #fafafa;
+}
+
+.form-control:focus {
+  border-color: #FF6B35;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(255,107,53,0.08);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 5px;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(67,233,123,0.3);
+}
+
+.submit-btn i {
+  margin-right: 10px;
+}
+
+.form-footer {
+  text-align: center;
+  padding: 0 30px 30px;
+}
+
+.form-footer a {
+  color: #FF6B35;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .signup-container {
+    margin-top: 80px;
+  }
+}
+</style>
+</head>
+<body>
+  <div class="signup-container">
+    <div class="signup-header">
+      <div class="icon">🎉</div>
+      <h1>Create Account</h1>
+      <p>Join us and start ordering today</p>
+    </div>
+    
+    <form class="signup-form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      
+      <div class="form-row">
+        <div class="form-group">
+          <i class="fas fa-user"></i>
+          {% render_field userForm.first_name class="form-control" placeholder="First Name" %}
+        </div>
+        <div class="form-group">
+          <i class="fas fa-user"></i>
+          {% render_field userForm.last_name class="form-control" placeholder="Last Name" %}
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <i class="fas fa-user-circle"></i>
+        {% render_field userForm.username class="form-control" placeholder="Username" %}
+      </div>
+      
+      <div class="form-group">
+        <i class="fas fa-lock"></i>
+        {% render_field userForm.password class="form-control" placeholder="Password" %}
+      </div>
+      
+      <div class="form-group">
+        <i class="fas fa-map-marker-alt"></i>
+        {% render_field customerForm.address class="form-control" placeholder="Address" %}
+      </div>
+      
+      <div class="form-group">
+        <i class="fas fa-phone"></i>
+        {% render_field customerForm.mobile class="form-control" placeholder="Mobile Number" %}
+      </div>
+      
+      <div class="form-group">
+        <i class="fas fa-camera"></i>
+        {% render_field customerForm.profile_pic class="form-control" placeholder="Profile Picture" %}
+      </div>
+      
+      <button type="submit" class="submit-btn">
+        <i class="fas fa-user-plus"></i> Create Account
+      </button>
+    </form>
+    
+    <div class="form-footer">
+      <p>Already have an account? <a href="/customerlogin">Login</a></p>
+    </div>
+  </div>
+</body>
+</html>

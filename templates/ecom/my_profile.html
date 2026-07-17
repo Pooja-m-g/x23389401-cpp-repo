@@ -1,0 +1,214 @@
+{% extends 'ecom/customer_base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+.profile-wrapper {
+    padding: 40px 40px 60px;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.profile-header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #2d3436;
+}
+
+.profile-header p {
+    color: #636e72;
+    font-size: 1.05rem;
+}
+
+.profile-card {
+    max-width: 700px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+    overflow: hidden;
+}
+
+.profile-cover {
+    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+    padding: 40px 30px 60px;
+    text-align: center;
+    position: relative;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+    object-fit: cover;
+    margin: 0 auto 15px;
+    display: block;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.profile-cover h2 {
+    color: white;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.profile-cover .username {
+    color: rgba(255,255,255,0.85);
+    font-size: 0.95rem;
+}
+
+.profile-body {
+    padding: 30px 35px 35px;
+    margin-top: -30px;
+    position: relative;
+    background: white;
+    border-radius: 24px 24px 0 0;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 16px 18px;
+    background: #fafafa;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+.info-item:hover {
+    background: #f0f0f0;
+}
+
+.info-icon {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.info-content .label {
+    font-size: 0.7rem;
+    color: #636e72;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0;
+}
+
+.info-content .value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #2d3436;
+    margin: 0;
+}
+
+.edit-btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.edit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255,107,53,0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.edit-btn i {
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+    .profile-wrapper {
+        padding: 20px 20px 40px;
+    }
+    
+    .profile-body {
+        padding: 25px 20px 30px;
+    }
+}
+</style>
+
+<div class="profile-wrapper">
+    <div class="profile-header">
+        <h1><i class="fas fa-user-circle" style="color: #FF6B35;"></i> My Profile</h1>
+        <p>View and manage your account information</p>
+    </div>
+
+    <div class="profile-card">
+        <div class="profile-cover">
+            {% if customer.profile_pic %}
+                <img src="{{ customer.profile_pic.url }}" alt="Profile" class="profile-avatar" />
+            {% else %}
+                <img src="{% static 'img/default-profile.png' %}" alt="Default" class="profile-avatar" />
+            {% endif %}
+            <h2>{{ request.user.first_name }} {{ request.user.last_name }}</h2>
+            <div class="username">@{{ request.user.username }}</div>
+        </div>
+
+        <div class="profile-body">
+            <div class="info-item">
+                <div class="info-icon"><i class="fas fa-user"></i></div>
+                <div class="info-content">
+                    <p class="label">Full Name</p>
+                    <p class="value">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon"><i class="fas fa-at"></i></div>
+                <div class="info-content">
+                    <p class="label">Username</p>
+                    <p class="value">{{ request.user.username }}</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon"><i class="fas fa-phone"></i></div>
+                <div class="info-content">
+                    <p class="label">Mobile Number</p>
+                    <p class="value">{{ customer.mobile }}</p>
+                </div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                <div class="info-content">
+                    <p class="label">Address</p>
+                    <p class="value">{{ customer.address }}</p>
+                </div>
+            </div>
+
+            <a href="/edit-profile" class="edit-btn">
+                <i class="fas fa-edit"></i> Edit Profile
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

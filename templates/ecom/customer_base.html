@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodHouse</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: #f8f9fa;
+    min-height: 100vh;
+}
+
+.navbar-custom {
+    background: white !important;
+    border: none;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    padding: 12px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    border-radius: 0;
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.navbar-brand {
+    color: #2d3436 !important;
+    font-size: 1.6rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.navbar-brand i {
+    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-right: 10px;
+}
+
+.navbar-brand span {
+    color: #FF6B35;
+}
+
+.nav-section {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: space-between;
+    margin: 0 20px;
+}
+
+.search-section {
+    flex: 2;
+    max-width: 500px;
+    margin: 0 20px;
+}
+
+.nav-links-section {
+    flex: 1.5;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.nav-link-item {
+    color: #636e72 !important;
+    font-weight: 500;
+    padding: 10px 16px !important;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-link-item:hover {
+    background: #f8f9fa;
+    color: #FF6B35 !important;
+    text-decoration: none;
+}
+
+.nav-link-item i {
+    color: #FF6B35;
+}
+
+.search-container {
+    position: relative;
+    width: 100%;
+}
+
+.search-form {
+    display: flex;
+    background: #f8f9fa;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.search-form:focus-within {
+    border-color: #FF6B35;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(255,107,53,0.08);
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    padding: 12px 18px;
+    font-size: 0.95rem;
+    outline: none;
+    background: transparent;
+}
+
+.search-button {
+    background: transparent;
+    border: none;
+    padding: 12px 18px;
+    color: #636e72;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-button:hover {
+    color: #FF6B35;
+}
+
+.cart-container {
+    position: relative;
+}
+
+.cart-button {
+    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.cart-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255,107,53,0.3);
+    color: white;
+    text-decoration: none;
+}
+
+.cart-count {
+    background: white;
+    color: #FF6B35;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.dropdown-menu {
+    background: white;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    padding: 8px 0;
+    min-width: 200px;
+}
+
+.dropdown-item {
+    padding: 12px 20px;
+    color: #2d3436;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dropdown-item:hover {
+    background: #f8f9fa;
+    color: #FF6B35;
+    text-decoration: none;
+}
+
+.main-content {
+    padding-top: 80px;
+    min-height: calc(100vh - 80px);
+}
+
+.footer {
+    background: white;
+    padding: 40px 0 20px;
+    margin-top: 50px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.social-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+    color: white;
+    text-decoration: none;
+}
+
+.facebook { background: #1877f2; }
+.whatsapp { background: #25d366; }
+.twitter { background: #1da1f2; }
+.instagram { background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d); }
+
+.footer-text {
+    text-align: center;
+    color: #636e72;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 992px) {
+    .navbar-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav-section {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .search-section {
+        order: 3;
+        width: 100%;
+        max-width: none;
+        margin: 10px 0;
+    }
+    
+    .nav-links-section {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+    
+    .nav-link-item {
+        padding: 8px 12px !important;
+        font-size: 0.9rem;
+    }
+    
+    .cart-button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .nav-link-item span {
+        display: none;
+    }
+    
+    .cart-button span:not(.cart-count) {
+        display: none;
+    }
+}
+</style>
+</head>
+<body>
+    <nav class="navbar navbar-custom">
+        <div class="container">
+            <div class="navbar-container">
+                <a class="navbar-brand" href="/">
+                    <i class="fas fa-store"></i>
+                    Food<span>House</span>
+                </a>
+
+                <div class="search-section">
+                    <div class="search-container">
+                        <form action="/search" method="get" class="search-form">
+                            <input type="search" class="search-input" placeholder="Search for food..." name="query" id="query">
+                            <button type="submit" class="search-button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="nav-links-section">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="navbar-collapse">
+                        <ul class="nav-links">
+                            <li><a href="/my-order" class="nav-link-item">
+                                <i class="fas fa-box"></i>
+                                <span>Orders</span>
+                            </a></li>
+                            
+                            <li><a href="/my-profile" class="nav-link-item">
+                                <i class="fas fa-user"></i>
+                                <span>Profile</span>
+                            </a></li>
+
+                            <li class="dropdown">
+                                <a href="#" class="nav-link-item dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                    <span>More</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/send-feedback" class="dropdown-item">
+                                        <i class="fas fa-comment"></i> Send Feedback
+                                    </a></li>
+                                </ul>
+                            </li>
+
+                            <li><a href="/logout" class="nav-link-item">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </a></li>
+
+                            <li class="cart-container">
+                                <a href="/cart" class="cart-button">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Cart</span>
+                                    <span class="cart-count">{{ product_count_in_cart }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+    
+</body>
+</html>

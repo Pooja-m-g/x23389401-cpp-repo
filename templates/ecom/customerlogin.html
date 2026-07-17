@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FoodHouse - Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-container {
+  max-width: 420px;
+  width: 100%;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+  overflow: hidden;
+  margin-top: 80px;
+}
+
+.login-header {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  padding: 35px 30px;
+  text-align: center;
+}
+
+.login-header .icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.login-header h1 {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.login-header p {
+  color: rgba(255,255,255,0.9);
+  font-size: 0.95rem;
+}
+
+.login-form {
+  padding: 35px 30px 25px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.form-group i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #FF6B35;
+}
+
+.form-control {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+  background: #fafafa;
+}
+
+.form-control:focus {
+  border-color: #FF6B35;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(255,107,53,0.08);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(67,233,123,0.3);
+}
+
+.submit-btn i {
+  margin-right: 10px;
+}
+
+.form-footer {
+  text-align: center;
+  padding: 0 30px 30px;
+}
+
+.form-footer a {
+  color: #FF6B35;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .login-header {
+    padding: 25px 20px;
+  }
+  
+  .login-form {
+    padding: 25px 20px 15px;
+  }
+  
+  .form-footer {
+    padding: 0 20px 25px;
+  }
+}
+</style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-header">
+      <div class="icon">🍔</div>
+      <h1>Welcome Back</h1>
+      <p>Login to order delicious food</p>
+    </div>
+    
+    <form class="login-form" method="post">
+      {% csrf_token %}
+      
+      <div class="form-group">
+        <i class="fas fa-user"></i>
+        {% render_field form.username class="form-control" placeholder="Username" %}
+      </div>
+      
+      <div class="form-group">
+        <i class="fas fa-lock"></i>
+        {% render_field form.password class="form-control" placeholder="Password" %}
+      </div>
+      
+      <button type="submit" class="submit-btn">
+        <i class="fas fa-sign-in-alt"></i> Login
+      </button>
+    </form>
+    
+    <div class="form-footer">
+      <p>Don't have an account? <a href="/customersignup">Sign up</a></p>
+    </div>
+  </div>
+</body>
+</html>

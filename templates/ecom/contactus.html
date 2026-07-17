@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>FoodHouse - Contact Us</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+.contact-wrapper {
+  min-height: 100vh;
+  padding: 120px 40px 60px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-card {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+  max-width: 700px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.contact-header {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  padding: 40px 35px;
+  text-align: center;
+}
+
+.contact-header h2 {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.contact-header p {
+  color: rgba(255,255,255,0.9);
+  margin: 5px 0 0;
+}
+
+.contact-body {
+  padding: 35px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #2d3436;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.form-group label i {
+  color: #FF6B35;
+  margin-right: 8px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+  background: #fafafa;
+}
+
+.form-control:focus {
+  border-color: #FF6B35;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(255,107,53,0.08);
+}
+
+.form-control.textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255,107,53,0.3);
+}
+
+.submit-btn i {
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .contact-wrapper {
+    padding: 100px 20px 40px;
+  }
+  
+  .contact-body {
+    padding: 25px;
+  }
+}
+</style>
+</head>
+
+<body>
+  {%if request.user.is_authenticated%}
+    {% include "ecom/customer_navbar.html" %}
+  {%else%}
+    {% include "ecom/navbar.html" %}
+  {%endif%}
+
+  <div class="contact-wrapper">
+    <div class="contact-card">
+      <div class="contact-header">
+        <h2><i class="fas fa-comment-dots"></i> Send Us Feedback</h2>
+        <p>We value your opinion and strive to improve</p>
+      </div>
+      
+      <form method="POST" class="contact-body">
+        {% csrf_token %}
+        
+        <div class="form-group">
+          <label><i class="fas fa-user"></i> Your Name</label>
+          {{ form.name }}
+        </div>
+        
+        <div class="form-group">
+          <label><i class="fas fa-comment"></i> Your Feedback</label>
+          {{ form.feedback }}
+        </div>
+        
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-paper-plane"></i> Send Message
+        </button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

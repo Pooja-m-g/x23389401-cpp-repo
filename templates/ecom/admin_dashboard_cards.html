@@ -1,0 +1,286 @@
+{% extends 'ecom/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+.dashboard-wrapper {
+  padding: 40px 40px 60px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.dashboard-header {
+  margin-bottom: 40px;
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #2d3436;
+}
+
+.dashboard-header p {
+  color: #636e72;
+  font-size: 1.1rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+}
+
+.stat-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: white;
+}
+
+.stat-icon.blue {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.stat-icon.orange {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+}
+
+.stat-icon.green {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.stat-info h3 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2d3436;
+  margin: 0;
+}
+
+.stat-info p {
+  color: #636e72;
+  margin: 0;
+  font-weight: 500;
+}
+
+.orders-section {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+
+.section-header {
+  padding: 25px 30px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.section-header h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2d3436;
+  margin: 0;
+}
+
+.section-header h2 i {
+  color: #FF6B35;
+  margin-right: 10px;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th {
+  padding: 18px 20px;
+  text-align: left;
+  font-weight: 600;
+  color: #636e72;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #fafafa;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.orders-table td {
+  padding: 18px 20px;
+  border-bottom: 1px solid #f5f5f5;
+  vertical-align: middle;
+  color: #2d3436;
+}
+
+.orders-table tr:hover {
+  background: #fafafa;
+}
+
+.product-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.status-badge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-pending {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.status-delivered {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-delivery {
+  background: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.status-confirmed {
+  background: #e3f2fd;
+  color: #0d47a1;
+}
+
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-wrapper {
+    padding: 20px 20px 40px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .orders-table {
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 1.8rem;
+  }
+}
+</style>
+
+<div class="dashboard-wrapper">
+  <div class="dashboard-header">
+    <h1>👋 Welcome back, Admin</h1>
+    <p>Here's what's happening with your business today</p>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon blue">
+        <i class="fas fa-users"></i>
+      </div>
+      <div class="stat-info">
+        <h3>{{customercount}}</h3>
+        <p>Total Customers</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon orange">
+        <i class="fas fa-utensils"></i>
+      </div>
+      <div class="stat-info">
+        <h3>{{productcount}}</h3>
+        <p>Total Products</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon green">
+        <i class="fas fa-shopping-bag"></i>
+      </div>
+      <div class="stat-info">
+        <h3>{{ordercount}}</h3>
+        <p>Total Orders</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="orders-section">
+    <div class="section-header">
+      <h2><i class="fas fa-clock"></i> Recent Orders</h2>
+    </div>
+    
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th>Customer</th>
+          <th>Mobile</th>
+          <th>Address</th>
+          <th>Product</th>
+          <th>Image</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product,customer,order in data %}
+        <tr>
+          {% for c in customer %}
+          <td><strong>{{c.get_name}}</strong></td>
+          <td>{{c.mobile}}</td>
+          <td>{{order.address}}</td>
+          {% endfor %}
+          
+          {% for p in product %}
+          <td>{{p.name}}</td>
+          <td>
+            <img src="{% static p.product_image.url %}" alt="Product" class="product-img" />
+          </td>
+          
+          {% if order.status == 'Pending' %}
+          <td><span class="status-badge status-pending">{{order.status}}</span></td>
+          {% elif order.status == 'Delivered' %}
+          <td><span class="status-badge status-delivered">{{order.status}}</span></td>
+          {% elif order.status == 'Out for Delivery' %}
+          <td><span class="status-badge status-delivery">{{order.status}}</span></td>
+          {% else %}
+          <td><span class="status-badge status-confirmed">{{order.status}}</span></td>
+          {% endif %}
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock content %}

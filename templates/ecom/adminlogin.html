@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FoodHouse - Admin Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-container {
+  max-width: 440px;
+  width: 100%;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+  overflow: hidden;
+  margin-top: 80px;
+}
+
+.login-header {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  padding: 40px 35px;
+  text-align: center;
+}
+
+.login-header .icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.login-header h1 {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.login-header p {
+  color: rgba(255,255,255,0.9);
+  font-size: 0.95rem;
+}
+
+.login-header .badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  padding: 6px 18px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: white;
+  margin-top: 12px;
+}
+
+.login-form {
+  padding: 35px 35px 25px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+  position: relative;
+}
+
+.form-group i {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #FF6B35;
+}
+
+.form-control {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+  background: #fafafa;
+}
+
+.form-control:focus {
+  border-color: #FF6B35;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(255,107,53,0.08);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255,107,53,0.3);
+}
+
+.submit-btn i {
+  margin-right: 10px;
+}
+
+.security-note {
+  text-align: center;
+  padding: 15px 35px 30px;
+  color: #636e72;
+  font-size: 0.85rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.security-note i {
+  color: #43e97b;
+  margin-right: 6px;
+}
+
+@media (max-width: 480px) {
+  .login-header {
+    padding: 30px 25px;
+  }
+  
+  .login-form {
+    padding: 25px 25px 15px;
+  }
+  
+  .security-note {
+    padding: 15px 25px 25px;
+  }
+}
+</style>
+</head>
+<body>
+  {% include "ecom/navbar.html" %}
+  
+  <div class="login-container">
+    <div class="login-header">
+      <div class="icon">🛡️</div>
+      <h1>Admin Panel</h1>
+      <p>Secure administrator access</p>
+      <span class="badge"><i class="fas fa-shield-alt"></i> Protected Area</span>
+    </div>
+    
+    <form class="login-form" method="post">
+      {% csrf_token %}
+      
+      <div class="form-group">
+        <i class="fas fa-user-shield"></i>
+        {% render_field form.username class="form-control" placeholder="Admin Username" %}
+      </div>
+      
+      <div class="form-group">
+        <i class="fas fa-key"></i>
+        {% render_field form.password class="form-control" placeholder="Admin Password" %}
+      </div>
+      
+      <button type="submit" class="submit-btn">
+        <i class="fas fa-sign-in-alt"></i> Access Panel
+      </button>
+    </form>
+    
+    <div class="security-note">
+      <i class="fas fa-lock"></i> Authorized personnel only. All access is logged.
+    </div>
+  </div>
+</body>
+</html>

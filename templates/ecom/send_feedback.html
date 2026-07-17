@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+{% load static %}
+{% load widget_tweaks %}
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>FoodHouse - Feedback</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style media="screen">
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FDC830 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.feedback-container {
+  background: white;
+  border-radius: 30px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  overflow: hidden;
+  max-width: 600px;
+  width: 100%;
+  margin-top: 100px;
+}
+
+.feedback-header {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FDC830 100%);
+  padding: 50px 30px;
+  text-align: center;
+  color: white;
+}
+
+.feedback-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.feedback-header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.feedback-header p {
+  opacity: 0.95;
+  font-size: 1.05rem;
+}
+
+.feedback-form {
+  padding: 40px 35px;
+}
+
+.form-group {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.form-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 10px;
+}
+
+.form-label i {
+  color: #667eea;
+  margin-right: 8px;
+}
+
+.required {
+  color: #e53e3e;
+}
+
+.form-control {
+  width: 100%;
+  padding: 15px 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 15px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+}
+
+.form-control:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102,126,234,0.1);
+}
+
+.form-textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FDC830 100%);
+  border: none;
+  border-radius: 15px;
+  color: white;
+  font-size: 1.15rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(102,126,234,0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(102,126,234,0.6);
+}
+
+.submit-btn i {
+  margin-right: 10px;
+}
+
+@media (max-width: 600px) {
+  .feedback-container {
+    margin-top: 80px;
+  }
+  
+  .feedback-header {
+    padding: 40px 25px;
+  }
+  
+  .feedback-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .feedback-form {
+    padding: 30px 25px;
+  }
+}
+</style>
+
+</head>
+
+<body>
+  {%if request.user.is_authenticated%}
+    {% include "ecom/customer_navbar.html" %}
+  {%endif%}
+
+  <div class="feedback-container">
+    <div class="feedback-header">
+      <div class="feedback-icon">💬</div>
+      <h1>We Value Your Feedback!</h1>
+      <p>Help us serve you better</p>
+    </div>
+
+    <form class="feedback-form" method="post">
+      {% csrf_token %}
+      
+      <div class="form-group">
+        <label class="form-label">
+          <i class="fas fa-user"></i> Your Name <span class="required">*</span>
+        </label>
+        {% render_field feedbackForm.name class="form-control" placeholder="Enter your name" %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">
+          <i class="fas fa-comment-dots"></i> Your Feedback <span class="required">*</span>
+        </label>
+        {% render_field feedbackForm.feedback class="form-control form-textarea" placeholder="Tell us what you think..." %}
+      </div>
+
+      <button type="submit" class="submit-btn">
+        <i class="fas fa-paper-plane"></i> Send Feedback
+      </button>
+    </form>
+  </div>
+</body>
+</html>

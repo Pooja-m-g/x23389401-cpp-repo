@@ -1,0 +1,203 @@
+{% extends 'ecom/admin_base.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+.customers-wrapper {
+  padding: 40px 40px 60px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.customers-header {
+  margin-bottom: 40px;
+}
+
+.customers-header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #2d3436;
+}
+
+.customers-header p {
+  color: #636e72;
+  font-size: 1rem;
+}
+
+.customers-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+
+.customers-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.customers-table th {
+  padding: 18px 20px;
+  text-align: left;
+  font-weight: 600;
+  color: #636e72;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #fafafa;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.customers-table td {
+  padding: 18px 20px;
+  border-bottom: 1px solid #f5f5f5;
+  vertical-align: middle;
+}
+
+.customers-table tr:hover {
+  background: #fafafa;
+}
+
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.customer-name {
+  font-weight: 600;
+  color: #2d3436;
+}
+
+.customer-mobile {
+  color: #636e72;
+}
+
+.customer-address {
+  color: #636e72;
+  max-width: 180px;
+}
+
+.action-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 3px;
+}
+
+.update-btn {
+  background: #e3f2fd;
+  color: #0d47a1;
+}
+
+.update-btn:hover {
+  background: #bbdefb;
+  color: #0d47a1;
+  text-decoration: none;
+}
+
+.delete-btn {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.delete-btn:hover {
+  background: #fecaca;
+  color: #dc2626;
+  text-decoration: none;
+}
+
+.no-customers {
+  text-align: center;
+  padding: 60px 20px;
+  color: #636e72;
+}
+
+.no-customers i {
+  font-size: 3rem;
+  color: #ddd;
+  margin-bottom: 15px;
+}
+
+.no-customers h3 {
+  color: #2d3436;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .customers-wrapper {
+    padding: 20px 20px 40px;
+  }
+  
+  .customers-table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+</style>
+
+<div class="customers-wrapper">
+  <div class="customers-header">
+    <h1><i class="fas fa-users" style="color: #FF6B35;"></i> Customer Management</h1>
+    <p>Manage all registered customers</p>
+  </div>
+
+  <div class="customers-card">
+    {% if customers %}
+    <table class="customers-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Profile</th>
+          <th>Mobile</th>
+          <th>Address</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in customers %}
+        <tr>
+          <td><span class="customer-name">{{ c.get_name }}</span></td>
+          <td>
+            {% if c.profile_pic %}
+              <img src="{{ c.profile_pic.url }}" alt="Profile" class="profile-pic" />
+            {% else %}
+              <div style="width:50px;height:50px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;color:#ccc;">
+                <i class="fas fa-user"></i>
+              </div>
+            {% endif %}
+          </td>
+          <td><span class="customer-mobile">{{ c.mobile }}</span></td>
+          <td><span class="customer-address">{{ c.address }}</span></td>
+          <td>
+            <a class="action-btn update-btn" href="{% url 'update-customer' c.id %}">
+              <i class="fas fa-edit"></i> Edit
+            </a>
+            <a class="action-btn delete-btn" href="{% url 'delete-customer' c.id %}">
+              <i class="fas fa-trash"></i> Delete
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="no-customers">
+      <i class="fas fa-users-slash"></i>
+      <h3>No Customers Found</h3>
+      <p>Customer accounts will appear here once they register.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock content %}

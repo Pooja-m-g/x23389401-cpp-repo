@@ -1,0 +1,169 @@
+{% extends 'ecom/admin_base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+<head>
+  <style media="screen">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    .add-product-wrapper {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 120px 40px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .add-product-card {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+      max-width: 800px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+      padding: 35px 40px;
+      text-align: center;
+    }
+
+    .card-header h2 {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .card-header p {
+      color: rgba(255,255,255,0.9);
+      margin: 5px 0 0;
+      font-size: 1rem;
+    }
+
+    .form-body {
+      padding: 40px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      color: #2d3436;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .form-group label i {
+      color: #FF6B35;
+      margin-right: 8px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 14px 18px;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      outline: none;
+      background: #fafafa;
+    }
+
+    .form-control:focus {
+      border-color: #FF6B35;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(255,107,53,0.08);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255,107,53,0.3);
+    }
+
+    .submit-btn i {
+      margin-right: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .add-product-wrapper {
+        padding: 100px 20px 40px;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      
+      .form-body {
+        padding: 30px 25px;
+      }
+    }
+  </style>
+</head>
+
+<div class="add-product-wrapper">
+  <div class="add-product-card">
+    <div class="card-header">
+      <h2><i class="fas fa-plus-circle"></i> Add New Product</h2>
+      <p>Add a delicious item to your menu</p>
+    </div>
+    
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label><i class="fas fa-utensils"></i> Product Name</label>
+            {% render_field productForm.name class="form-control" placeholder="Enter product name" %}
+          </div>
+          <div class="form-group">
+            <label><i class="fas fa-dollar-sign"></i> Price</label>
+            {% render_field productForm.price class="form-control" placeholder="Enter price" %}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label><i class="fas fa-align-left"></i> Description</label>
+          {% render_field productForm.description class="form-control" placeholder="Enter product description" %}
+        </div>
+        
+        <div class="form-group">
+          <label><i class="fas fa-image"></i> Product Image</label>
+          {% render_field productForm.product_image class="form-control" %}
+        </div>
+        
+        <button type="submit" class="submit-btn">
+          <i class="fas fa-plus"></i> Add Product
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}
