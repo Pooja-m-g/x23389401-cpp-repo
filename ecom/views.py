@@ -7,6 +7,13 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.contrib import messages
 from django.conf import settings
 
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate, logout  # Make sure logout is here
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+
 def home_view(request):
     products=models.Product.objects.all()
     if 'product_ids' in request.COOKIES:
@@ -18,6 +25,15 @@ def home_view(request):
     if request.user.is_authenticated:
         return HttpResponseRedirect('afterlogin')
     return render(request,'ecom/index.html',{'products':products,'product_count_in_cart':product_count_in_cart})
+
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('home')
+
+
 
 
 #for showing login button for admin(by sumit)
@@ -333,39 +349,77 @@ def search_view(request):
     return render(request,'ecom/index.html',{'products':products,'word':word,'product_count_in_cart':product_count_in_cart})
 
 
+# # any one can add product to cart, no need of signin
+# def add_to_cart_view(request,pk):
+#     products=models.Product.objects.all()
+
+#     #for cart counter, fetching products ids added by customer from cookies
+#     if 'product_ids' in request.COOKIES:
+#         product_ids = request.COOKIES['product_ids']
+#         counter=product_ids.split('|')
+#         #product_count_in_cart=len(set(counter))
+#         product_count_in_cart = len(counter)
+#     else:
+#         product_count_in_cart=1
+
+#     response = render(request, 'ecom/index.html',{'products':products,'product_count_in_cart':product_count_in_cart})
+#     #response = render(request, 'ecom/index.html', {'products': products, 'product_count_in_cart': product_count_in_cart})
+
+#     #adding product id to cookies
+#     if 'product_ids' in request.COOKIES:
+#         product_ids = request.COOKIES['product_ids']
+#         if product_ids=="":
+#             product_ids=str(pk)
+#         else:
+#             product_ids=product_ids+"|"+str(pk)
+#         response.set_cookie('product_ids', product_ids)
+#     else:
+#         response.set_cookie('product_ids', pk)
+
+#     product=models.Product.objects.get(id=pk)
+#     messages.info(request, product.name + ' added to cart successfully!')
+
+#     return response
+
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from . import models
+
 # any one can add product to cart, no need of signin
-def add_to_cart_view(request,pk):
-    products=models.Product.objects.all()
-
-    #for cart counter, fetching products ids added by customer from cookies
+def add_to_cart_view(request, pk):
+    # Get the product
+    product = models.Product.objects.get(id=pk)
+    
+    # Get current cart from cookies
     if 'product_ids' in request.COOKIES:
         product_ids = request.COOKIES['product_ids']
-        counter=product_ids.split('|')
-        #product_count_in_cart=len(set(counter))
-        product_count_in_cart = len(counter)
-    else:
-        product_count_in_cart=1
-
-    response = render(request, 'ecom/index.html',{'products':products,'product_count_in_cart':product_count_in_cart})
-    #response = render(request, 'ecom/index.html', {'products': products, 'product_count_in_cart': product_count_in_cart})
-
-    #adding product id to cookies
-    if 'product_ids' in request.COOKIES:
-        product_ids = request.COOKIES['product_ids']
-        if product_ids=="":
-            product_ids=str(pk)
+        if product_ids:
+            product_ids_list = product_ids.split('|')
+            if str(pk) not in product_ids_list:
+                product_ids = product_ids + "|" + str(pk)
+            else:
+                messages.info(request, f'{product.name} is already in your cart!')
+                # Redirect back to the referring page
+                if request.META.get('HTTP_REFERER'):
+                    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+                return HttpResponseRedirect(reverse('home'))
         else:
-            product_ids=product_ids+"|"+str(pk)
-        response.set_cookie('product_ids', product_ids)
+            product_ids = str(pk)
     else:
-        response.set_cookie('product_ids', pk)
-
-    product=models.Product.objects.get(id=pk)
-    messages.info(request, product.name + ' added to cart successfully!')
-
+        product_ids = str(pk)
+    
+    # Set cookie with updated cart
+    response = HttpResponseRedirect(request.META.get('HTTP_REFERER', reverse('home')))
+    response.set_cookie('product_ids', product_ids, max_age=30*24*60*60)  # 30 days
+    response.set_cookie('cart_updated', 'true', max_age=30)  # Temporary flag
+    
+    # Add success message
+    messages.success(request, f'{product.name} added to cart successfully!')
+    
     return response
-
-
 
 
 """ 
@@ -1040,4 +1094,7 @@ def edit_profile_view(request):
             customerForm.save()
             return HttpResponseRedirect('my-profile')
     return render(request,'ecom/edit_profile.html',context=mydict)
+
+
+
 
