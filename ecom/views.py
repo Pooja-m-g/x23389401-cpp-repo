@@ -33,6 +33,15 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
+@login_required
+# Disable CSRF for logout (optional, makes it work with GET)
+def custom_logout_view(request):
+    """
+    Custom logout view that works with GET and POST requests
+    """
+    logout(request)
+    # Clear session and redirect to home
+    return HttpResponseRedirect(reverse('home'))
 
 
 
