@@ -374,10 +374,14 @@ body {
                                 </ul>
                             </li>
 
-                            <li><a href="/logout/" class="nav-link-item">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <span>Logout</span>
-                            </a></li>
+                            <!--<li><a href="/logout/" class="nav-link-item">-->
+                            <!--    <i class="fas fa-sign-out-alt"></i>-->
+                            <!--    <span>Logout</span>-->
+                            <!--</a></li>-->
+                            <a href="#" onclick="logoutUser(); return false;" class="nav-link-item">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Logout</span>
+</a>
 
                             <li class="cart-container">
                                 <a href="/cart" class="cart-button">
@@ -398,6 +402,40 @@ body {
         {% endblock content %}
     </div>
 
+
+<script>
+function logoutUser() {
+    // Create a form dynamically and submit it
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '/logout/';
+    
+    // Add CSRF token
+    var csrfInput = document.createElement('input');
+    csrfInput.type = 'hidden';
+    csrfInput.name = 'csrfmiddlewaretoken';
+    csrfInput.value = getCookie('csrftoken');
+    form.appendChild(csrfInput);
+    
+    document.body.appendChild(form);
+    form.submit();
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
     
 </body>
 </html>
