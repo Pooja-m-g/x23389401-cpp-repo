@@ -73,3 +73,81 @@ Features:
 * Bootstrap
 * GitHub Actions
 
+
+---
+
+## Installation
+
+### Clone Repository
+
+```bash
+git clone <repository-url>
+cd foodhouse
+```
+
+### Create Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+### Activate Environment
+
+```bash
+source venv/bin/activate
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Run Database Migrations
+
+```bash
+python manage.py migrate
+```
+
+### Start Application
+
+```bash
+python manage.py runserver
+```
+
+---
+
+## Project Structure
+
+```text
+foodhouse/
+│
+├── app/
+├── templates/
+├── static/
+├── media/
+├── invoice_pdf_lib/
+├── requirements.txt
+├── manage.py
+└── README.md
+```
+
+---
+
+## CI/CD Deployment
+
+GitHub Actions is used to automate Continuous Integration and Continuous Deployment (CI/CD).
+
+Whenever code changes are pushed to GitHub, the application is automatically deployed to AWS Elastic Beanstalk.
+
+
+
+---
+
+## Author
+
+Pooja
+
+Cloud Platform Programming Project
+
+
