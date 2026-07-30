@@ -15,14 +15,19 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home_view,name=''),
     path('', views.home_view, name='home'),
-
+    path('afterlogin', views.afterlogin_view,name='afterlogin'),
+    # path('logout', LogoutView.as_view(template_name='ecom/logout.html'),name='logout'),
+    # path('logout/', views.logout_view, name='logout'),
+    path('logout/', LogoutView.as_view(next_page='home'), name='logout'),
     #path('aboutus', views.aboutus_view),
     #path('contactus', views.contactus_view,name='contactus'),
     # Use custom logout view
- 
-
+    path('logout/', views.custom_logout_view, name='logout'),
+    path('logout', views.custom_logout_view),  # Also handle without slash
     
-
+    path('search', views.search_view,name='search'),
+    path('send-feedback', views.send_feedback_view,name='send-feedback'),
+    path('view-feedback', views.view_feedback_view,name='view-feedback'),
 
     path('adminclick', views.adminclick_view),
     path('adminlogin', LoginView.as_view(template_name='ecom/adminlogin.html'),name='adminlogin'),
