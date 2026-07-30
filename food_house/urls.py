@@ -20,7 +20,7 @@ urlpatterns = [
     #path('contactus', views.contactus_view,name='contactus'),
     # Use custom logout view
     path('logout/', views.custom_logout_view, name='logout'),
-    path('logout', views.custom_logout_view),  # Also handle without slash
+
     
 
 
